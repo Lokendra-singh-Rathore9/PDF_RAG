@@ -1,0 +1,10 @@
+{"timestamp": "2025-10-28T17:42:30.335139Z", "level": "info", "event": "Serving UI homepage."}
+{"timestamp": "2025-10-28T17:42:40.339911Z", "level": "info", "event": "Uploading and indexing file: sample.pdf"}
+Use pytorch device_name: cpu
+Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+Loading faiss with AVX512 support.
+Could not load library with AVX512 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx512'")
+Loading faiss with AVX2 support.
+Successfully loaded faiss with AVX2 support.
+{"timestamp": "2025-10-28T17:42:48.153860Z", "level": "info", "event": "Index created successfully for session: session_20251028_231240_bfefa741"}
