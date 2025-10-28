@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PDF Chat Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="/static/style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo">📚</span>
+      <h1>PDF Chat Portal</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="tab-chat" class="tab-panel active">
+      <div class="card">
+        <h2>💬 Chat with your PDF</h2>
+        <p class="muted">Upload your PDF file and start asking questions about its content.</p>
+
+        <!-- Upload Section -->
+        <form id="form-chat-index" class="form-grid" onsubmit="return false;">
+          <div class="field">
+            <label for="chat-files">Upload PDF File</label>
+            <input id="chat-files" type="file" accept=".pdf" />
+            <small class="help">Only one file at a time is supported.</small>
+          </div>
+          <div class="actions">
+            <button id="btn-build" class="btn primary">Upload & Index</button>
+          </div>
+        </form>
+
+        <div id="chat-meta" class="muted small"></div>
+
+        <div class="divider"></div>
+
+        <!-- Query Section -->
+        <form id="form-chat-ask" class="form-grid" onsubmit="return false;">
+          <div class="field">
+            <label for="chat-q">Ask a Question</label>
+            <input id="chat-q" type="text" placeholder="Ask something about your document…" />
+          </div>
+          <div class="actions">
+            <button id="btn-ask" class="btn">Ask</button>
+          </div>
+        </form>
+
+        <div id="chat-ans" class="result-block">
+          <h3>Answer</h3>
+          <div class="answer" id="chat-answer">No answer yet.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+  const API_BASE = "";
+  let currentSession = null;
+
+  // === Handle PDF Upload ===
+  document.getElementById("btn-build").addEventListener("click", async () => {
+    const files = document.getElementById("chat-files").files;
+    const meta  = document.getElementById("chat-meta");
+
+    if (!files.length) {
+      meta.textContent = "⚠️ Please select a PDF file first.";
+      return;
+    }
+
+    try {
+      meta.textContent = "⏳ Uploading and indexing your PDF…";
+      const fd = new FormData();
+      fd.append("file", files[0]);
+
+      const res = await fetch(`${API_BASE}/chat/upload_files`, { method: "POST", body: fd });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: res.statusText }));
+        throw new Error(err.detail || `HTTP ${res.status}`);
+      }
+
+      const json = await res.json();
+      currentSession = json.session_id;
+      meta.textContent = `✅ Uploaded & indexed successfully. Session ID: ${currentSession}`;
+    } catch (e) {
+      meta.textContent = "❌ Upload failed: " + (e.message || e);
+    }
+  });
+
+  // === Handle Question Ask ===
+  document.getElementById("btn-ask").addEventListener("click", async () => {
+    const q = document.getElementById("chat-q").value.trim();
+    const ans = document.getElementById("chat-answer");
+
+    if (!q) { ans.textContent = "Please enter a question."; return; }
+    if (!currentSession) { ans.textContent = "Please upload a PDF first."; return; }
+
+    try {
+      ans.textContent = "🤔 Thinking…";
+      const fd = new FormData();
+      fd.append("session_id", currentSession);
+      fd.append("query", q);
+
+      const res = await fetch(`${API_BASE}/chat/query`, { method: "POST", body: fd });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: res.statusText }));
+        throw new Error(err.detail || `HTTP ${res.status}`);
+      }
+
+      const json = await res.json();
+      ans.textContent = json.answer || "No relevant information found.";
+    } catch (e) {
+      ans.textContent = "❌ Query failed: " + (e.message || e);
+    }
+  });
+  </script>
+</body>
+</html>
