@@ -5,8 +5,13 @@ PDF_RAG enables Retrieval-Augmented Generation (RAG) workflows for PDF documents
 ---
 
 ## 📹 Demo Video
+Check out our demo video for the LLM-powered Text Classification API:\
 
-[![Watch the Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+
+https://github.com/user-attachments/assets/3701645a-f43a-4119-b076-0edf0d75198e
+
+
+
 <br>
 <details>
 <summary>Or download: PDF_RAG.Demo.mp4</summary>
@@ -154,10 +159,10 @@ PDF_RAG/
 ├── pyproject.toml
 ├── requirements.txt
 ├── uv.lock
-├── api/              # API-related code (directory, contents not listed)
-├── logger/           # Logging utilities (directory, contents not listed)
-├── logs/             # Log files (directory, contents not listed)
-├── src/              # Main source code (directory, contents not listed)
+├── api/              # API-related code (main.py)
+├── logger/           # Logging utilities (Custom logger)
+├── logs/             # Log files (Logs)
+├── src/              # Main source code (data_ingestion, data_retriver file, prompts)
 ├── static/           # Static assets such as CSS, images (directory, contents not listed)
 ├── templates/        # HTML templates (directory, contents not listed)
 ```
@@ -181,3 +186,4 @@ This project is licensed under the MIT License.
 ## 🙏 Acknowledgments
 
 Thanks to all contributors and the open-source community.
+
