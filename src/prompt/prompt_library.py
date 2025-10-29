@@ -1,8 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-
-
-# Prompt for contextual question rewriting
 contextualize_question_prompt = ChatPromptTemplate.from_messages([
     ("system", (
         "Given a conversation history and the most recent user query, rewrite the query as a standalone question "
@@ -29,3 +26,7 @@ PROMPT_REGISTRY = {
     "contextualize_question": contextualize_question_prompt,
     "context_qa": context_qa_prompt,
 }
+
+
+## 1. Hello thier i want to study about RAG
+## 2. what is the full form of it
