@@ -51,8 +51,8 @@ pipx install uv
 
 ```bash
 #In cmd terminal of folder
-uv init
-
+#Create & activate a virtual environment with Python 3.10
+uv venv .venv
 # Activate the environment
 source .venv/bin/activate      # Linux/Mac
 # or
@@ -80,7 +80,10 @@ GROQ_API_KEY=<your_groq_api_key_here>
 ```bash
 uvicorn api.main:app --port 8080 --reload    
 
+## this will take time if not start the try again after clossing the uvicorn command by ctrl+c and try again with above command
 ```
+
+
 
 API available at: [http://localhost:8000](http://localhost:8000)
 
@@ -186,4 +189,5 @@ This project is licensed under the MIT License.
 ## 🙏 Acknowledgments
 
 Thanks to all contributors and the open-source community.
+
 
